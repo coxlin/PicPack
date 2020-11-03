@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PicPack"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="PicPack" Height="800" Width="500" Background="SlateGray" WindowStyle="ToolWindow">
     <Grid>
         <StackPanel Margin="10">

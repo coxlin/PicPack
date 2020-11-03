@@ -25,6 +25,7 @@
  */
 
 
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Windows;
@@ -41,6 +42,19 @@ namespace PicPack
             InitializeComponent();
             SetupSizeBox();
             SetupFileTypeBox();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("PICPACK Created by Lindsay Cox");
+            Console.WriteLine("Copyright (c) 2020");
+            Console.WriteLine();
+            Console.WriteLine("Inspired by Crunch - https://github.com/ChevyRay/crunch");
+            Console.WriteLine();
+            Console.WriteLine("Uses MaxRectBinPack");
+            Console.WriteLine("Original C# Port by Sven Magnus - https://wiki.unity3d.com/index.php/MaxRectsBinPack");
+            Console.WriteLine("Original C++ code by Jukka Jylänki - https://github.com/juj/RectangleBinPack");
+            Console.WriteLine();
         }
 
         private void SetupSizeBox()
