@@ -1,29 +1,24 @@
-﻿/** Based on file Rect.h
+﻿/** Original Rect.h
 	@author Jukka Jylänki
 	This work is released to Public Domain, do whatever you want with it.
+
+    Ported to C# by Lindsay Cox
+    Public Domain
 */
 
 namespace PicPack
 {
     public class RectSize
     {
-        public int Width;
-        public int Height;
+        public int width;
+        public int height;
     }
 
     public class Rect
     {
-        public int Width;
-        public int Height;
-        public int X;
-        public int Y;
-    }
-
-    public static class RectUtils
-    {
-        public static bool IsContainedIn(Rect a, Rect b)
-        {
-            return a.X >= b.X && a.Y >= b.Y && a.X + a.Width <= b.X + b.Width && a.Y + a.Height <= b.Y + b.Height;
-        }
+        public int width;
+        public int height;
+        public int x;
+        public int y;
     }
 }

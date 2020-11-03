@@ -24,58 +24,29 @@
  
  */
 
-
-using System.Collections.Generic;
-using System.Drawing.Imaging;
-using System.Windows;
+using System.Drawing;
 
 namespace PicPack
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public static class PNGUtils
     {
-        public MainWindow()
+       public static Color[,] GetPixels2D(string file)
         {
-            InitializeComponent();
-            SetupSizeBox();
-            SetupFileTypeBox();
-        }
-
-        private void SetupSizeBox()
-        {
-            var list = new List<string>()
+            Bitmap bitmap = new Bitmap(file);
+            var pixels = new Color[bitmap.Width, bitmap.Height];
+            for (int x = 0; x < bitmap.Width; ++x)
             {
-                "32", "64", "128", "256", "512", "1024", "2048", "4096", "8192"
-            };
-
-            foreach (var i in list)
-            {
-                MaxSizeBox.Items.Add(i);
-                MaxHeightBox.Items.Add(i);
+                for (int y = 0; y < bitmap.Width; ++y)
+                {
+                    pixels[x,y] = bitmap.GetPixel(x, y);
+                }
             }
+            return pixels;
         }
 
-        private void SetupFileTypeBox()
+        public static Color[] GetPixels(string file)
         {
-            TypeBox.Items.Add(ImageFormat.Png.ToString());
-            TypeBox.Items.Add(ImageFormat.Jpeg.ToString());
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void RemoveButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void PackButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            return ArrayUtils.Flatten<Color>(GetPixels2D(file));
         }
     }
 }

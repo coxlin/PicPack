@@ -5,12 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PicPack"
         mc:Ignorable="d"
-        Title="PicPack" Height="850" Width="500" Background="SlateGray" WindowStyle="ToolWindow">
+        Title="PicPack" Height="800" Width="500" Background="SlateGray" WindowStyle="ToolWindow">
     <Grid>
         <StackPanel Margin="10">
             <Image Source="/Logo.png"></Image>
-            <Label Content="Inspired by Crunch -  https://github.com/chevyray/crunch" Foreground="White"></Label>
-            <Label Content="Uses Jukka Jylänki's RectangleBinPack - https://github.com/juj/RectangleBinPack" Foreground="White"></Label>
             <Label Content="Images To Pack:" Foreground="White"></Label>
             <ListBox Height="233" ScrollViewer.VerticalScrollBarVisibility="Visible"></ListBox>
             <StackPanel Orientation="Horizontal">
