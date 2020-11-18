@@ -31,6 +31,12 @@ namespace PicPack
 {
     public static class BitmapUtils
     {
+        public static Bitmap LoadBitmap(string file)
+        {
+            Image i = Image.FromFile(file);
+            return new Bitmap(i);
+        }
+
         public static byte[] ImageToByte(Bitmap img)
         {
             ImageConverter converter = new ImageConverter();

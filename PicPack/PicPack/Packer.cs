@@ -72,14 +72,16 @@ namespace PicPack
     {
         private struct Point
         {
-            public int x;
-            public int y;
-            public int dupID;
-            public bool rot;
+            public int X;
+            public int Y;
+            public bool IsRot;
         };
+
         private readonly List<Point> _points = new List<Point>();
         private readonly List<Bitmap> _bitmaps = new List<Bitmap>();
+        
         private Dictionary<Bitmap, string> _bitmapDic;
+        
         private int _width, _height, _pad;
         
         public Packer(int w , int h, int pad)
@@ -91,12 +93,12 @@ namespace PicPack
 
         public void Pack(
             Dictionary<Bitmap, string> bitmapDic, 
-            bool rotate)
+            bool allowRotations)
         {
             _bitmapDic = bitmapDic;
             var bitmaps = bitmapDic.Keys.ToList();
 
-            MaxRectsBinPack packer = new MaxRectsBinPack(_width, _height, rotate);
+            MaxRectsBinPack packer = new MaxRectsBinPack(_width, _height, allowRotations);
             
             int ww = 0;
             int hh = 0;
@@ -118,10 +120,9 @@ namespace PicPack
                 }
 
                 Point p = new Point();
-                p.x = rect.x;
-                p.y = rect.y;
-                p.dupID = -1;
-                p.rot = rotate && bitmap.Width != (rect.width - _pad);
+                p.X = rect.x;
+                p.Y = rect.y;
+                p.IsRot = allowRotations && bitmap.Width != (rect.width - _pad);
                 _points.Add(p);
                 _bitmaps.Add(bitmap);
                 bitmaps.Remove(bitmap);
@@ -142,16 +143,13 @@ namespace PicPack
             int j = _bitmaps.Count;
             for (int i = 0; i < j; ++i)
             {
-                if (_points[i].dupID < 0)
+                if (_points[i].IsRot)
                 {
-                    if (_points[i].rot)
-                    {
-                        BitmapUtils.CopyPixelsRot(bitmap, _bitmaps[i], _points[i].x, _points[i].y);
-                    }
-                    else
-                    {
-                        BitmapUtils.CopyPixels(bitmap, _bitmaps[i], _points[i].x, _points[i].y);
-                    }
+                    BitmapUtils.CopyPixelsRot(bitmap, _bitmaps[i], _points[i].X, _points[i].Y);
+                }
+                else
+                {
+                    BitmapUtils.CopyPixels(bitmap, _bitmaps[i], _points[i].X, _points[i].Y);
                 }
             }
             bitmap.Save(file, imageFormat);
@@ -167,11 +165,11 @@ namespace PicPack
                 jsonElements.Add(new BitmapJSONElement()
                 {
                     Name = _bitmapDic[_bitmaps[i]],
-                    X = _points[i].x,
-                    Y = _points[i].y,
+                    X = _points[i].X,
+                    Y = _points[i].Y,
                     Width = _bitmaps[i].Width,
                     Height = _bitmaps[i].Height,
-                    Rotate = _points[i].rot
+                    Rotate = _points[i].IsRot
                 });
             }
 

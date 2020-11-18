@@ -24,11 +24,14 @@
  
  */
 
-
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Windows;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace PicPack
 {
@@ -37,6 +40,9 @@ namespace PicPack
     /// </summary>
     public partial class MainWindow : Window
     {
+        private static readonly Regex _paddingRegex = new Regex("[^0-9]+");
+        private static readonly AppController _appController = new AppController();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -66,7 +72,7 @@ namespace PicPack
 
             foreach (var i in list)
             {
-                MaxSizeBox.Items.Add(i);
+                MaxWidthBox.Items.Add(i);
                 MaxHeightBox.Items.Add(i);
             }
         }
@@ -79,17 +85,63 @@ namespace PicPack
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileList.Items.Add(openFileDialog.FileName);
+            }
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
-
+            var items = FileList.SelectedItems;
+            foreach (var i in items)
+            {
+                FileList.Items.Remove(i);
+            }
         }
 
         private void PackButton_Click(object sender, RoutedEventArgs e)
         {
+            if (FileList.Items.Count == 0 ||
+                string.IsNullOrEmpty(NameBox.Text)) 
+            {
+                return;
+            }
+            _appController.DoPack(
+                NameBox.Text,
+                FileList.Items.Cast<string>().ToList(),
+                Convert.ToInt32(MaxWidthBox.Text),
+                Convert.ToInt32(MaxHeightBox.Text),
+                Convert.ToInt32(PaddingBox.Text),
+                RotEnabled.IsChecked.Value,
+                (ImageFormat)Enum.Parse(typeof(ImageFormat), TypeBox.Text));
+        }
 
+        private void PaddingBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = _paddingRegex.IsMatch(e.Text);
+        }
+
+        private void PaddingBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                if (!_paddingRegex.IsMatch(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            FileList.Items.Clear();
         }
     }
 }
