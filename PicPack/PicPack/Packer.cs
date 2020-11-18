@@ -143,14 +143,7 @@ namespace PicPack
             int j = _bitmaps.Count;
             for (int i = 0; i < j; ++i)
             {
-                if (_points[i].IsRot)
-                {
-                    BitmapUtils.CopyPixelsRot(bitmap, _bitmaps[i], _points[i].X, _points[i].Y);
-                }
-                else
-                {
-                    BitmapUtils.CopyPixels(bitmap, _bitmaps[i], _points[i].X, _points[i].Y);
-                }
+                BitmapUtils.CopyPixels(bitmap, _bitmaps[i], _points[i].X, _points[i].Y);
             }
             bitmap.Save(file, imageFormat);
         }

@@ -108,14 +108,20 @@ namespace PicPack
             {
                 return;
             }
+
+            ImageFormat imageFormat = ImageFormat.Png;
+            if (TypeBox.Text == ImageFormat.Jpeg.ToString())
+            {
+                imageFormat = ImageFormat.Jpeg;
+            }
+
             _appController.DoPack(
                 NameBox.Text,
                 FileList.Items.Cast<string>().ToList(),
                 Convert.ToInt32(MaxWidthBox.Text),
                 Convert.ToInt32(MaxHeightBox.Text),
                 Convert.ToInt32(PaddingBox.Text),
-                RotEnabled.IsChecked.Value,
-                (ImageFormat)Enum.Parse(typeof(ImageFormat), TypeBox.Text));
+                imageFormat);
         }
 
         private void PaddingBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)

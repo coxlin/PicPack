@@ -43,41 +43,23 @@ namespace PicPack
             return (byte[])converter.ConvertTo(img, typeof(byte[]));
         }
 
+        public static void CopyRegionIntoImage(
+            Bitmap src,
+            ref Bitmap dest,
+            int x,
+            int y)
+        {
+            using (Graphics g = Graphics.FromImage(dest))
+            {
+                g.DrawImage(src, x, y);
+            }
+        }
+
         public static void CopyPixels(Bitmap target, Bitmap src, int tx, int ty)
         {
-            var targetBytes = ImageToByte(target);
-            var srcBytes = ImageToByte(src);
-            for (int y = 0; y < src.Height; ++y)
-            {
-                for (int x = 0; x < src.Width; ++x)
-                {
-                    targetBytes[(ty + y) * target.Width + (tx + x)] = srcBytes[y * src.Width + x];
-                }
-            }
-            using (MemoryStream s = new MemoryStream(targetBytes))
-            {
-                target = new Bitmap(s);
-            }
+            CopyRegionIntoImage(src, ref target, tx, ty);
         }
 
-        public static void CopyPixelsRot(Bitmap target, Bitmap src, int tx, int ty)
-        {
-            var targetBytes = ImageToByte(target);
-            var srcBytes = ImageToByte(src);
-
-            int r = src.Height - 1;
-            for (int y = 0; y < src.Width; ++y)
-            {
-                for (int x = 0; x < src.Height; ++x)
-                {
-                    targetBytes[(ty + y) * target.Width + (tx + x)] = srcBytes[(r - x) * src.Width + y];
-                }
-            }
-
-            using (MemoryStream s = new MemoryStream(targetBytes))
-            {
-                target = new Bitmap(s);
-            }
-        }
+        
     }
 }

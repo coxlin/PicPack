@@ -17,7 +17,6 @@ namespace PicPack
             int maxWidth,
             int maxHeight,
             int padding,
-            bool allowRotations,
             ImageFormat imageFormat)
         {
             try
@@ -31,7 +30,7 @@ namespace PicPack
                     bitmapDic.Add(b, n);
                 }
                 Packer p = new Packer(maxWidth, maxHeight, padding);
-                p.Pack(bitmapDic, allowRotations);
+                p.Pack(bitmapDic, false);
                 VistaFolderBrowserDialog d = new VistaFolderBrowserDialog();
                 d.ShowDialog();
                 if (!string.IsNullOrEmpty(d.SelectedPath))
@@ -39,8 +38,8 @@ namespace PicPack
                     string imageFile = Path.Combine(d.SelectedPath, name + "." + imageFormat.ToString());
                     p.Save(imageFile, imageFormat);
                     string jsonFile = Path.Combine(d.SelectedPath, name + ".json");
-                    p.SaveJson(jsonFile, name, allowRotations);
-                    Process.Start(imageFile);
+                    p.SaveJson(jsonFile, name, false);
+                    Console.WriteLine("Saved " + d.SelectedPath);
                 }
 
             }

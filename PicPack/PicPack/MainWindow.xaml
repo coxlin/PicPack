@@ -30,8 +30,7 @@
                 <TextBox x:Name="PaddingBox" Height="31" PreviewTextInput="PaddingBox_PreviewTextInput" DataObject.Pasting="PaddingBox_Pasting" Width="80"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10">
-                <Label Content="Allow Rotations" Foreground="White"></Label>
-                <CheckBox x:Name="RotEnabled" Height="16" Width="16"></CheckBox>
+
             </StackPanel>
             <Button Name="PackButton" Content="Pack" Height="65" Click="PackButton_Click" Margin="10"></Button>
         </StackPanel>
