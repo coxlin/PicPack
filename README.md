@@ -1,6 +1,5 @@
 # PicPack
-PicPack is an easy Texture Packing Tool
-
-It is a GUI tool inspired by Crunch by ChevyRay - https://github.com/ChevyRay/crunch
-
-And uses Jukka Jylänki's RectangleBinPack - https://github.com/juj/RectangleBinPack
+A really simple GUI Tool to pack sprites into PNG or jpegs.
+Originally inspired by Crunch(https://github.com/ChevyRay/crunch) PicPack uses RectangleBinPack( https://github.com/juj/RectangleBinPack)
+to pack sprites together.
+Licensed under the MIT license, so do what you want with it!
